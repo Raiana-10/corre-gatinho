@@ -9,30 +9,23 @@
 </head> 
 <body>
     <style>
-
         body{
-        
-    background-image: url(fundo/fundo.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;      /* Faz a imagem cobrir toda a tela */
-    background-position: center; /* Centraliza a imagem */
-    background-attachment: fixed; /* A imagem permanece fixa quando você rola a página */
-    height: 100%;                 /* Garante que o corpo ocupe 100% da altura da janela */
-    margin: 0;                    /* Remove margens do body */
-    padding: 0;                   /* Remove o padding do body */
-    box-sizing: border-box;       /* Garante que o padding e border não afetem as dimensões */
+            background-image: url(fundo/fundo.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;      /* Faz a imagem cobrir toda a tela */
+            background-position: center; /* Centraliza a imagem */
+            background-attachment: fixed; /* A imagem permanece fixa quando você rola a página */
+            height: 100%;                 /* Garante que o corpo ocupe 100% da altura da janela */
+            margin: 0;                    /* Remove margens do body */
+            padding: 0;                   /* Remove o padding do body */
+            box-sizing: border-box;       /* Garante que o padding e border não afetem as dimensões */
+        }
 
-
-}
-            
-        
-        
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
         div{
             font-family: "Orbitron", sans-serif;
         }
-
 
         .level-up-message {
             color: #ff00ff;             /* Cor roxa */
@@ -46,24 +39,37 @@
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6); /* Sombra para dar destaque */
         }
 
+        button {
+            background-color: #4CAF50; /* Cor de fundo */
+            color: white;              /* Cor do texto */
+            border: none;              /* Sem borda */
+            padding: 10px 20px;        /* Espaçamento interno */
+            font-size: 16px;           /* Tamanho da fonte */
+            cursor: pointer;          /* Cursor de mão ao passar o mouse */
+            border-radius: 5px;        /* Borda arredondada */
+            transition: background-color 0.3s; /* Efeito ao passar o mouse */
+        }
+
+        button:hover {
+            background-color: #45a049; /* Cor de fundo ao passar o mouse */
+        }
+
     </style>
 
-
     <div class="gamer-board">
-    <img src="nuvem.png" class="nuvem">
-    <img src="pessoa.gif" class="pessoa">
-    <img src="quadrado.webp" class="quadrado">
-    <button><a href="teste.html"><strong>Jogar novamente</strong></a></button>
-    <div id="levelUpMessage" class="level-up-message"></div>
+        <img src="nuvem.png" class="nuvem">
+        <img src="pessoa.gif" class="pessoa">
+        <img src="quadrado.webp" class="quadrado">
 
+        <!-- Botão para recarregar a página -->
+        <button onclick="window.location.reload();"><strong>Voltar a página</strong></button>
 
-   <div id="jumpCount">Pulos: 0</div>
-   <div id="level">Nível: 1</div>
-   <div id="gameOverMessage"></div>
+        <div id="levelUpMessage" class="level-up-message"></div>
 
-
-
-
+        <div id="jumpCount">Pulos: 0</div>
+        <div id="level">Nível: 1</div>
+        <div id="gameOverMessage"></div>
     </div>
 </body>
+</html>
 
