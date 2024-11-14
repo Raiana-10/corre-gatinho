@@ -31,7 +31,7 @@
         }
 
         body {
-            background-image: url(fundo/fundo.jpg);
+            background-image: url(fundo.jpg);
             background-attachment: fixed;
             height: 100%;
             margin: 0;
