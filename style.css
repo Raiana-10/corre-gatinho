@@ -1,0 +1,172 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    
+    
+
+}
+
+button {
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px black;
+    background-color: rgb(58, 233, 175);
+    border: none;
+    margin-top: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    background-image: linear-gradient(to bottom, blue 50%, green 50%);
+    background-attachment: fixed;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.gamer-board {
+    width: 100%;
+    height: 90vh;
+    margin-top: 50px;
+    border-bottom: 15px solid green;
+    margin: 0 auto;
+    position: relative;
+    background-image: linear-gradient(blue, white);
+    overflow-x: hidden;
+    padding-top: 50px;
+}
+
+button:hover {
+    background-color: rgb(176, 230, 213);
+    cursor: pointer;
+}
+
+.nuvem {
+    position: absolute;
+}
+
+.quadrado {
+    position: absolute;
+    width: 80px;
+    bottom: 0;
+    animation: game 1.5s infinite linear;
+}
+
+.pessoa {
+    width: 150px;
+    position: absolute;
+    bottom: 0;
+    transition: bottom 0.3s;
+}
+
+.jump {
+    animation: jump 700ms ease-in-out;
+}
+
+.nuvem {
+    width: 550px;
+    animation: nuvem 10s infinite linear;
+}
+
+@keyframes game {
+    from {
+        right: -80px;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+@keyframes jump {
+    0% {
+        bottom: 0;
+    }
+    40% {
+        bottom: 250px;  /* altura máxima do pulo */
+    }
+    60% {
+        bottom: 250px;  /* mantém a altura máxima por mais tempo */
+    }
+    100% {
+        bottom: 0;  /* volta ao chão */
+    }
+}
+
+
+@keyframes nuvem {
+    from {
+        right: -550px;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+/* Media Queries para dispositivos móveis */
+@media (max-width: 768px) {
+    button {
+        width: 50%;
+        height: auto;
+        margin-top: 30px;
+        padding: 10px 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gamer-board {
+        margin-top: 40px;
+        height: 80vh;
+        padding-top: 20px;
+    }
+
+    .quadrado {
+        width: 60px;
+    }
+
+    .pessoa {
+        width: 120px;
+    }
+
+    .nuvem {
+        width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    button {
+        margin-top: 10px;
+        height: auto;
+        padding: 10px 20px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .gamer-board {
+        margin-top: 30px;
+        height: 70vh;
+        padding-top: 10px;
+    }
+
+    .quadrado {
+        width: 50px;
+    }
+
+    .pessoa {
+        width: 100px;
+    }
+
+    .nuvem {
+        width: 300px;
+    }
+}
