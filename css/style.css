@@ -76,16 +76,17 @@
             animation: game 1.5s infinite linear;
         }
 
-        .pessoa {
-            width: 150px;
-            position: absolute;
-            bottom: 0;
-            transition: bottom 0.3s, transform 0.3s;
-            transform: scale(1.5) translateY(-10px); /* Suspende a imagem um pouco para cima */
-            left: 25px;
-            margin: auto;
-            mix-blend-mode: multiply;
-        }
+     .pessoa {
+    width: 150px;
+    position: absolute;
+    bottom: 0;
+    transition: bottom 0.3s, transform 0.3s;
+    transform: scale(1.5) translateY(-10px);
+    left: 25px;
+    margin: auto;
+    mix-blend-mode: multiply;
+    z-index: 10; /* Adiciona um z-index para garantir que a camada esteja na frente */
+}
 
         .jump {
             animation: jump 700ms ease-in-out; /* Aplica o efeito de pulo */
