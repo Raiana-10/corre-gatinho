@@ -1,154 +1,131 @@
 document.addEventListener('DOMContentLoaded', () => {
     const pessoa = document.querySelector('.pessoa');
     const quadrado = document.querySelector('.quadrado');
-    const timerElement = document.getElementById('timer');  // Referência para o cronômetro
-    const jumpCountElement = document.getElementById('jumpCount');  // Elemento para mostrar a contagem de pulos
-    const levelElement = document.getElementById('level');  // Elemento para mostrar o nível do jogo
-    const levelUpMessage = document.getElementById('levelUpMessage');  // Elemento para a mensagem "Level Up!"
+    const timerElement = document.getElementById('timer');
+    const jumpCountElement = document.getElementById('jumpCount');
+    const levelElement = document.getElementById('level');
+    const levelUpMessage = document.getElementById('levelUpMessage');
 
-    let isJumping = false;  // Variável para verificar se o boneco está pulando
-    let isDead = false;  // Variável para verificar se o boneco morreu
-    let timer = 0;  // Variável para o tempo
-    let jumpCount = 0;  // Variável para contar os pulos
-    let level = 1;  // Nível do jogo
-    let timerInterval = null;  // Armazena o ID do intervalo
-    let gameSpeed = 2.0;  // Velocidade inicial ajustada (um pouco mais rápida)
+    let isJumping = false;
+    let isDead = false;
+    let timer = 0;
+    let jumpCount = 0;
+    let level = 1;
+    let timerInterval = null;
+    let gameSpeed = 3.0;  // Comece com uma velocidade um pouco mais lenta para o quadrado
 
-    // Função para iniciar o pulo
+    // Função de pulo
     const jump = () => {
-        if (isJumping || isDead) return; // Não permite pular se o boneco já está no ar ou morto
-        isJumping = true;  // Marca que o boneco está pulando
+        if (isJumping || isDead) return;
+        isJumping = true;
+        jumpCount++;
+        jumpCountElement.textContent = `Pulos: ${jumpCount}`;
+        pessoa.classList.add('jump');  // Inicia o pulo
 
-        jumpCount++;  // Incrementa a contagem de pulos
-        jumpCountElement.textContent = `Pulos: ${jumpCount}`;  // Atualiza a exibição da contagem de pulos
-
-        pessoa.classList.add('jump');  // Inicia a animação de pulo
-
-        // Depois que o pulo terminar, o boneco volta ao chão
         setTimeout(() => {
             pessoa.classList.remove('jump');
-            isJumping = false;  // Marca que o boneco não está mais pulando
-        }, 700);  // O tempo do pulo (700ms)
+            isJumping = false;
+        }, 700);  // A duração do pulo pode ser ajustada
 
-        // Aumenta a dificuldade a cada 10 pulos
         if (jumpCount % 10 === 0) {
             increaseDifficulty();
         }
     };
 
-    // Função para aumentar a dificuldade do jogo
     const increaseDifficulty = () => {
-        level++;  // Aumenta o nível
-        gameSpeed *= 0.95;  // Aumenta a velocidade do quadrado (diminui o tempo da animação)
-
-        // Aplica a nova velocidade ao quadrado
+        level++;
+        gameSpeed *= 0.95;  // Diminui um pouco a velocidade do quadrado para equilibrar
         quadrado.style.animationDuration = `${gameSpeed}s`;
-
-        // Atualiza o nível do jogo na interface
         levelElement.textContent = `Nível: ${level}`;
-
-        // Exibe a mensagem "Level Up!"
         showLevelUpMessage();
-
-        console.log(`Nível ${level} alcançado! Velocidade do quadrado: ${gameSpeed.toFixed(2)}s`);
     };
 
-    // Função para mostrar a mensagem "Level Up!"
     const showLevelUpMessage = () => {
-        levelUpMessage.textContent = "Level Up!";  // Define o texto da mensagem
-        levelUpMessage.style.display = 'block';  // Torna a mensagem visível
+        levelUpMessage.textContent = "Level Up!";
+        levelUpMessage.style.display = 'block';
 
-        // Esconde a mensagem após 2 segundos
         setTimeout(() => {
-            levelUpMessage.style.display = 'none';  // Torna a mensagem invisível novamente
+            levelUpMessage.style.display = 'none';
         }, 2000);
     };
 
-    // Função para iniciar o cronômetro
     const startTimer = () => {
         timerInterval = setInterval(() => {
-            timer++;  // Incrementa o tempo a cada segundo
-            timerElement.textContent = `Tempo: ${timer}s`;  // Atualiza a exibição do cronômetro
-        }, 1000);  // 1 segundo
+            timer++;
+            timerElement.textContent = `Tempo: ${timer}s`;
+        }, 1000);
     };
 
-    // Função para parar o cronômetro
     const stopTimer = () => {
-        clearInterval(timerInterval);  // Para o cronômetro
+        clearInterval(timerInterval);
     };
 
-    // Função para reiniciar o cronômetro e a contagem de pulos
     const resetGame = () => {
-        clearInterval(timerInterval);  // Limpa o intervalo
-        timer = 0;  // Reseta o tempo para 0
-        jumpCount = 0;  // Reseta a contagem de pulos para 0
-        level = 1;  // Reseta o nível para 1
-        jumpCountElement.textContent = `Pulos: 0`;  // Reseta o display de contagem de pulos
-        levelElement.textContent = `Nível: 1`;  // Reseta o display do nível
-        gameSpeed = 2.0;  // Reseta a velocidade do quadrado para o valor ajustado
-        quadrado.style.animationDuration = `${gameSpeed}s`;  // Aplica a velocidade inicial ao quadrado
+        clearInterval(timerInterval);
+        timer = 0;
+        jumpCount = 0;
+        level = 1;
+        jumpCountElement.textContent = `Pulos: 0`;
+        levelElement.textContent = `Nível: 1`;
+        gameSpeed = 3.0;  // Redefine a velocidade para um valor inicial mais lento
+        quadrado.style.animationDuration = `${gameSpeed}s`;
     };
 
-    // Função para restaurar o personagem ao estado inicial
     const restorePerson = () => {
-        pessoa.src = 'pessoa.gif';  // Restaura a imagem original do personagem
-        pessoa.style.width = '100px';  // Ajusta o tamanho do personagem (se necessário)
-        pessoa.style.bottom = '0px';  // Coloca o personagem de volta no chão
-        pessoa.style.animation = '';  // Remove qualquer animação anterior
+        pessoa.src = 'pessoa.gif';
+        pessoa.style.width = '100px';
+        pessoa.style.bottom = '0px';
+        pessoa.style.animation = '';
     };
 
-    // Loop para verificar colisões enquanto o quadrado se move
+    // Loop de verificação de colisão
     const loop = setInterval(() => {
-        if (isJumping || isDead) return;  // Não verifica colisão enquanto o boneco está pulando ou morto
+        if (isJumping || isDead) return;
 
         const quadradoPosition = quadrado.offsetLeft;
         const pessoaPosition = +window.getComputedStyle(pessoa).bottom.replace('px', '');
 
-        // Verifica se o quadrado está na posição de colisão e o boneco está no chão
-        if (quadradoPosition < 120 && quadradoPosition > 0 && pessoaPosition <= 80) {
-            // Adiciona uma verificação extra para garantir que a colisão é registrada corretamente
+        // Verifica se o quadrado colide com o personagem no chão
+        if (quadradoPosition < 10 && quadradoPosition > 0 && pessoaPosition <= 80) {
             const quadradoWidth = quadrado.offsetWidth;
             const pessoaWidth = pessoa.offsetWidth;
             const distancia = quadradoPosition + quadradoWidth > 120;
 
+            // Colisão
             if (distancia && pessoaPosition <= 80) {
-                isDead = true;  // Marca que o boneco morreu
+                isDead = true;
                 quadrado.style.animation = 'none';
-                quadrado.style.left = `${quadradoPosition}px`;  // Mantém a posição atual do quadrado
+                quadrado.style.left = `${quadradoPosition}px`;
 
                 pessoa.style.animation = 'none';
-                pessoa.style.bottom = `${pessoaPosition}px`;  // Mantém a posição atual do boneco
+                pessoa.style.bottom = `${pessoaPosition}px`;
 
-                pessoa.src = 'tumulo.gif';  // Muda o sprite do boneco para o túmulo (morte)
-                pessoa.style.width = '120px';  // Ajusta o tamanho do boneco
+                pessoa.src = 'tumulo.gif';
+                pessoa.style.width = '120px';
 
-                clearInterval(loop);  // Para o loop de colisão
-                stopTimer();  // Para o cronômetro
+                clearInterval(loop);
+                stopTimer();
 
-                alert(`Fim de Jogo! Seu tempo foi: ${timer}s e você pulou ${jumpCount} vezes no nível ${level}`);  // Exibe o tempo final, a quantidade de pulos e o nível
+                alert(`Fim de Jogo! Seu tempo foi: ${timer}s e você pulou ${jumpCount} vezes no nível ${level}`);
             }
         }
     }, 10);
 
-    // Adiciona os eventos de teclado e toque para iniciar o pulo
+    // Ajuste do evento de toque para permitir um tempo de resposta maior
     document.addEventListener('keydown', jump);
-    document.addEventListener('touchstart', (e) => {
-        e.preventDefault();  // Previne o comportamento padrão do toque
-        jump();
+    document.addEventListener('touchend', (e) => {
+        e.preventDefault();  // Evita comportamento padrão
+        jump();  // Chama a função de pulo
     });
 
-    // Iniciar o jogo
     const startGame = () => {
-        if (isDead) return;  // Não inicia o jogo novamente se o personagem morreu
+        if (isDead) return;
 
-        resetGame();  // Reseta o cronômetro e a contagem de pulos antes de iniciar o jogo
-        restorePerson();  // Restaura a imagem e o estado do personagem
-        startTimer();  // Inicia o cronômetro
-
-        // Reinicia o quadrado e a pessoa para o início do jogo
+        resetGame();
+        restorePerson();
+        startTimer();
         quadrado.style.animation = `game ${gameSpeed}s infinite linear`;  // Reinicia a animação do quadrado
     };
 
-    // Iniciar o jogo
     startGame();
 });
